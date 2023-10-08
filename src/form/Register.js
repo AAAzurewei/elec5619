@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Register from "./Register";
+import Loginpage from "./Loginpage";
 
 import image32 from '../resources/image23.png';
 import user from "../resources/user.svg";
@@ -9,19 +8,14 @@ import icon_eye from "../resources/icon _eye_.svg";
 import logogoogle from "../resources/logogoogleg48dp.svg";
 
 
-export default function Loginpage() {
+export default function Resister() {
 
 
 const [userAcount, setuserAccount] = useState('yours@Gmail');
 const [password, setPassword] = useState('');
+const [confirmpassword, setConfirmPassword] = useState('');
+
 const [submitstatus,setSubmitstatus] = useState("typing");
-const [hidden, setHidden] = useState(false);
-const [page, setPage] = useState("login");
-
-if(page === 'register'){
-
-  return <Register />
-}
 
 const placeholder = 'qqqqq';
 
@@ -35,12 +29,11 @@ async function HandleSubmit(e){
   }
   
 }
-const chosePage = () => {
-  
-  if (page === "register") {
-    return <Register />;
-  }
-};
+const [page, setPage] = useState("register");
+
+if(page === 'login'){
+  return <Loginpage />
+}
 
 function LoginSubmit(e){
 
@@ -49,39 +42,6 @@ function LoginSubmit(e){
     alert('${userAccount}');
   },3000);
   
-  
-}
-
-
-function hiddenPSW(hidden){
-  if(hidden === false){
-    return(
-    <div className={"FieldwithImage"}>
-                  <img className={'iconEye1'} alt="" src={icon_eye} onClick = {() => setHidden(true)}/>
-                  <input 
-                    className={"loginpageField"}
-                    
-                    placeholder=""
-                    value = {password}
-                    onChange = {e => setPassword(e.target.value)}
-                  />
-              </div>
-  )
-  }
-  else{
-    return(
-      <div className={"FieldwithImage"}>
-                  <img className={'iconEye1'} alt="" src={icon_eye} onClick = {() => setHidden(false)}/>
-                  <input 
-                    className={"loginpageField"}
-                    type = {'password'}
-                    placeholder=""
-                    value = {password}
-                    onChange = {e => setPassword(e.target.value)}
-                  />
-              </div>
-    )
-  }
   
 }
 
@@ -98,7 +58,7 @@ function Sendclick(){
     <div className={"image23Parent"}>
             
             <img className={"logo"} alt="" src={image32} />
-            <h1 className={"loginmark"}>login</h1>
+            <h1 className={"loginmark"}>register</h1>
 
 
             
@@ -114,38 +74,39 @@ function Sendclick(){
               </div>
 
               <div className={"FieldwithImage"}>
-                  <img className={'iconEye1'} alt="" src={icon_eye} onClick = {e => hiddenPSW}/>
+                  <img className={'iconEye1'} alt="" src={icon_eye} />
                   <input 
                     className={"loginpageField"}
-                    type = {'password'}
                     placeholder=""
                     value = {password}
                     onChange = {e => setPassword(e.target.value)}
                   />
               </div>
-            
-            
-            
 
+              <div className={"FieldwithImage"}>
+                  <img className={'iconEye1'} alt="" src={icon_eye} />
+                  <input 
+                    className={"loginpageField"}
+                    placeholder=""
+                    value = {confirmpassword}
+                    onChange = {e => setConfirmPassword(e.target.value)}
+                  />
+              </div>
             
-            <h2 className={'forgetPassword'}>forget password?</h2>
 
             <div className="FieldwithImage">
               <button className={'loginWrapper'}
                       onClick = {LoginSubmit}
-                >login</button>
+                >register</button>
             </div>
 
             <div className="FieldwithImage">
-              
-                <button className={'loginWrapper'}
-                        onClick = {() => {setPage("register")}}
-                  >register</button>  
-              
-              
+              <button className={'loginWrapper'}
+                      onClick = {() => {setPage("login")}}
+                >login</button>
             </div>
 
-            
+                        
             <button className={'officialButtonsSignInWit1'}>
                 <img className={'logoGoogleg48dp1'} alt="" src={logogoogle} />
                 <div className={'signInWith1'}>Sign in with Google</div>
