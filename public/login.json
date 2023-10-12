@@ -1,0 +1,7 @@
+{
+    "code": 200,
+    "msg": "Login successful",
+    "data": {
+        "token": "generated_token_string"
+    }
+}

@@ -1,7 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Register from "./Register";
+import axios from "axios";
+import Cookies from "universal-cookie";
+
 
 import image32 from '../resources/image23.png';
 import user from "../resources/user.svg";
@@ -12,86 +14,82 @@ import logogoogle from "../resources/logogoogleg48dp.svg";
 export default function Loginpage() {
 
 
-const [userAcount, setuserAccount] = useState('yours@Gmail');
-const [password, setPassword] = useState('');
+const cookies = new Cookies('userCookie',{path:'/'});
 const [submitstatus,setSubmitstatus] = useState("typing");
-const [hidden, setHidden] = useState(false);
+
 const [page, setPage] = useState("login");
+
+const [state, setState] = useState("0");
+
+const [loginForm, setLoginform] = useState({
+  username: "yours@Gmail.com",
+  password: "",
+});
+
+const onChangeForm = (label, event) => {
+  switch (label) {
+    case "username":
+      setLoginform({ ...loginForm, username: event.target.value });
+      break;
+    case "password":
+      setLoginform({ ...loginForm, password: event.target.value });
+      break;
+  }
+};
 
 if(page === 'register'){
 
   return <Register />
 }
 
-const placeholder = 'qqqqq';
+
+
+function Statemessage(){
+  axios
+  .get('login.json')
+
+  .then(Response =>{
+    
+    if(Response.data.code === 200){
+      cookies.set('userCookie',Response.data.data)
+      alert(cookies.get('userCookie'));
+    }else{
+      alert(Response.data.msg);
+    }
+    //console.log(Response.data); 
+  })
+  .catch(error =>{
+    alert(error);
+    //console.log(error)
+  })
+  
+}
+
 
 async function HandleSubmit(e){
+  //e.preventDefault();
   setSubmitstatus("submitting login information");
-  try{
-    setSubmitstatus("submit success");
 
-  }catch(e){
+  axios.post('https://httpbin.org/anything',loginForm)
+  .then((Response)=>{
+    if(Response.data.code === 200){
+      cookies.set('userCookie',Response.data.data)
+      alert(Response.data.data);
+      setSubmitstatus("submit success");
+    }
+    else{
+      alert(Response.data.msg);
+    }
+    
+  })
+  .catch(error =>{
     setSubmitstatus('error');
-  }
-  
-}
-const chosePage = () => {
-  
-  if (page === "register") {
-    return <Register />;
-  }
-};
-
-function LoginSubmit(e){
-
-  e.preventDefault();
-  setTimeout(() =>{
-    alert('${userAccount}');
-  },3000);
-  
+    alert(error);
+  });
   
 }
 
 
-function hiddenPSW(hidden){
-  if(hidden === false){
-    return(
-    <div className={"FieldwithImage"}>
-                  <img className={'iconEye1'} alt="" src={icon_eye} onClick = {() => setHidden(true)}/>
-                  <input 
-                    className={"loginpageField"}
-                    
-                    placeholder=""
-                    value = {password}
-                    onChange = {e => setPassword(e.target.value)}
-                  />
-              </div>
-  )
-  }
-  else{
-    return(
-      <div className={"FieldwithImage"}>
-                  <img className={'iconEye1'} alt="" src={icon_eye} onClick = {() => setHidden(false)}/>
-                  <input 
-                    className={"loginpageField"}
-                    type = {'password'}
-                    placeholder=""
-                    value = {password}
-                    onChange = {e => setPassword(e.target.value)}
-                  />
-              </div>
-    )
-  }
-  
-}
-
-function Sendclick(){
-  return(
-    <div>
-      <h2>{userAcount}</h2>
-    </div>
-  )
-}
 
 
   return(
@@ -99,40 +97,35 @@ function Sendclick(){
             
             <img className={"logo"} alt="" src={image32} />
             <h1 className={"loginmark"}>login</h1>
-
-
             
               <div className={"FieldwithImage"}>
                 <img className={'userIcon1'} alt="" src={user} />
                 <input 
                   type='text'
                   className={"loginpageField"}
-                  placeholder="1234@Gmail.com"
-                  value = {userAcount}
-                  onChange = {e => setuserAccount(e.target.value)}
+                  placeholder="username"
+                  
+                  onChange = {(e) => onChangeForm('username',e)}
                 />
               </div>
 
               <div className={"FieldwithImage"}>
-                  <img className={'iconEye1'} alt="" src={icon_eye} onClick = {e => hiddenPSW}/>
+                  <img className={'iconEye1'} alt="" src={icon_eye}/>
                   <input 
                     className={"loginpageField"}
-                    type = {'password'}
-                    placeholder=""
-                    value = {password}
-                    onChange = {e => setPassword(e.target.value)}
+                    type = 'password'
+                    placeholder="password"                    
+                    onChange = {(e) => onChangeForm('password',e)}
                   />
               </div>
+              
             
-            
-            
-
-            
+                        
             <h2 className={'forgetPassword'}>forget password?</h2>
 
             <div className="FieldwithImage">
               <button className={'loginWrapper'}
-                      onClick = {LoginSubmit}
+                      onClick = {()=>{HandleSubmit()}}
                 >login</button>
             </div>
 
@@ -144,8 +137,7 @@ function Sendclick(){
               
               
             </div>
-
-            
+           
             <button className={'officialButtonsSignInWit1'}>
                 <img className={'logoGoogleg48dp1'} alt="" src={logogoogle} />
                 <div className={'signInWith1'}>Sign in with Google</div>

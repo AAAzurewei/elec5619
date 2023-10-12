@@ -1,6 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { useState } from 'react';
 import Loginpage from "./Loginpage";
+import axios from 'axios';
+import Cookies from "universal-cookie";
 
 import image32 from '../resources/image23.png';
 import user from "../resources/user.svg";
@@ -10,47 +12,57 @@ import logogoogle from "../resources/logogoogleg48dp.svg";
 
 export default function Resister() {
 
-
-const [userAcount, setuserAccount] = useState('yours@Gmail');
-const [password, setPassword] = useState('');
+const cookies = new Cookies('RegisCookie',{path:'/'});
 const [confirmpassword, setConfirmPassword] = useState('');
 
 const [submitstatus,setSubmitstatus] = useState("typing");
 
-const placeholder = 'qqqqq';
+const [RegisterForm, setRegisterform] = useState({
+  email: "yours@Gmail.com",
+  password: "",
+  nickname: "",
+});
+
+const onChangeForm = (label, event) => {
+  switch (label) {
+    case "email":
+      setRegisterform({ ...RegisterForm, email: event.target.value });
+      break;
+    case "password":
+      setRegisterform({ ...RegisterForm, password: event.target.value });
+      break;
+    case "nickname":
+      setRegisterform({ ...RegisterForm, nickname: event.target.value });
+      break;
+  }
+};
 
 async function HandleSubmit(e){
-  setSubmitstatus("submitting login information");
-  try{
-    setSubmitstatus("submit success");
-
-  }catch(e){
+  //e.preventDefault();
+  setSubmitstatus("submitting resigter information");
+  axios.post('https://httpbin.org/anything',RegisterForm)
+  .then((Response)=>{
+    if(Response.data.code === 200){
+      cookies.set('RegisCookie',Response.data.token)
+      alert(Response.data.token);
+      setSubmitstatus("submit success");
+    }
+    else{
+      alert(Response.data.msg);
+    }
+  })
+  .catch(error =>{
     setSubmitstatus('error');
-  }
+    alert(error);
+  });
   
 }
+
+
 const [page, setPage] = useState("register");
 
 if(page === 'login'){
   return <Loginpage />
-}
-
-function LoginSubmit(e){
-
-  e.preventDefault();
-  setTimeout(() =>{
-    alert('${userAccount}');
-  },3000);
-  
-  
-}
-
-function Sendclick(){
-  return(
-    <div>
-      <h2>{userAcount}</h2>
-    </div>
-  )
 }
 
 
@@ -67,19 +79,18 @@ function Sendclick(){
                 <input 
                   type='text'
                   className={"loginpageField"}
-                  placeholder="1234@Gmail.com"
-                  value = {userAcount}
-                  onChange = {e => setuserAccount(e.target.value)}
+                  placeholder="1234@Gmail.com"                  
+                  onChange = {(e) => onChangeForm('email',e)}
                 />
               </div>
 
               <div className={"FieldwithImage"}>
                   <img className={'iconEye1'} alt="" src={icon_eye} />
                   <input 
+                    type = 'text'
                     className={"loginpageField"}
                     placeholder=""
-                    value = {password}
-                    onChange = {e => setPassword(e.target.value)}
+                    onChange = {(e) => onChangeForm('nickname',e)}
                   />
               </div>
 
@@ -87,8 +98,20 @@ function Sendclick(){
                   <img className={'iconEye1'} alt="" src={icon_eye} />
                   <input 
                     className={"loginpageField"}
+                    type='password'
                     placeholder=""
-                    value = {confirmpassword}
+                    
+                    onChange = {(e) => onChangeForm('password',e)}
+                  />
+                  
+              </div>
+
+              <div className={"FieldwithImage"}>
+                  <img className={'iconEye1'} alt="" src={icon_eye} />
+                  <input 
+                    className={"loginpageField"}
+                    type='password'
+                    placeholder=""                    
                     onChange = {e => setConfirmPassword(e.target.value)}
                   />
               </div>
@@ -96,7 +119,7 @@ function Sendclick(){
 
             <div className="FieldwithImage">
               <button className={'loginWrapper'}
-                      onClick = {LoginSubmit}
+                      onClick = {()=>{HandleSubmit()}}
                 >register</button>
             </div>
 
