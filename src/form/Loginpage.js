@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Register from "./Register";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import Map from "./Map";
 
 
 import image32 from '../resources/image23.png';
@@ -42,7 +43,10 @@ if(page === 'register'){
   return <Register />
 }
 
+if(page === 'map'){
 
+  return <Map />
+}
 
 function Statemessage(){
   axios
@@ -134,6 +138,15 @@ async function HandleSubmit(e){
                 <button className={'loginWrapper'}
                         onClick = {() => {setPage("register")}}
                   >register</button>  
+              
+              
+            </div>
+
+            <div className="FieldwithImage">
+              
+                <button className={'loginWrapper'}
+                        onClick = {() => {setPage("map")}}
+                  >map</button>  
               
               
             </div>

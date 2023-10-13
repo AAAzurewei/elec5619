@@ -66,6 +66,7 @@ if(page === 'login'){
 }
 
 
+
   return(
     <div className={"image23Parent"}>
             
