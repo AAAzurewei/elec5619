@@ -8,7 +8,7 @@
 `yarn add file:./vendor/mazemap`
 
 ### Note:
-Make sure you don't have `--ignore-scripts` in your yarn config.
+Make sure you don't have `--ignore-scripts` in your yarn.
 
 If you do, the `install` script in the package will not run and will not
 download the pre-built files from mazemap servers.

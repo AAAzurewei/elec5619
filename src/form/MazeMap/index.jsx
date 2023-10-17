@@ -5,8 +5,6 @@ import * as React from 'react';
 import * as Mazemap from "mazemap/mazemap.min.js"
 import "mazemap/mazemap.min.css"
 import "./mazemap-wrapper.css"
-
-
 window.Mazemap = Mazemap;
 
 type Props = {
@@ -29,6 +27,55 @@ export function makeMazeMapInstance(options: Object): Mazemap.Map {
     const mapOptions = Object.assign({}, defaultOptions, options);
 
     const map = new Mazemap.Map(mapOptions);
+
+    map.addControl(new Mazemap.mapboxgl.NavigationControl());
+
+    map.on('load', function(){
+        map.on('click', onMapClick);
+    });
+
+    var mazeMarker;
+
+    function onMapClick(e){
+        // Clear existing, if any
+        clearPoiMarker();
+
+        var lngLat = e.lngLat;
+        var zLevel = map.zLevel;
+
+        const clickData = Mazemap.Util.getMapClickData(map, lngLat, zLevel);
+
+        placeMarker(lngLat, zLevel);
+        printClickData(clickData);
+    }
+
+    function clearPoiMarker(){
+        if(mazeMarker){
+            mazeMarker.remove();
+        }
+    };
+
+    function printClickData(data){
+        //var poiStr = JSON.stringify(data, null, 2); // spacing level = 2
+        //document.getElementById('click-data').innerHTML = poiStr;
+
+        console.log('Got click data:', data); // Can also look in your console to see the object there
+    }
+
+    function placeMarker(lngLat, zLevel){
+        mazeMarker = new Mazemap.MazeMarker({
+            color: '#ff00cc',
+            innerCircle: true,
+            innerCircleColor: '#FFF',
+            size: 34,
+            innerCircleScale: 0.5,
+            zLevel: zLevel
+        })
+        .setLngLat(lngLat)
+        .addTo(map);
+
+    }
+
     /* For debugging, it helps to add the map to global window
        to quickly access methods like window.mazemapinstance.getZoom(), etc.
        To do so, add the line below
@@ -68,6 +115,7 @@ export class MazeMapWrapper extends React.Component<Props> {
 
     render() {
         if( !this.props.map ){
+            alert("map doesnt exist");
             return null;
         }
 
@@ -76,7 +124,10 @@ export class MazeMapWrapper extends React.Component<Props> {
                     ref && ref.appendChild(this.props.map.getContainer() );
                     this.props.map.resize();
                 }
-            } className={['mazemapWrapper', this.props.className].join(' ')}> {this.props.children}</div>
+            }
+            
+            className={['mazemapWrapper', this.props.className].join(' ')}> {this.props.children}
+            </div>
         );
     }
 

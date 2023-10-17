@@ -8,6 +8,8 @@ import image32 from '../resources/image23.png';
 import user from "../resources/user.svg";
 import icon_eye from "../resources/icon _eye_.svg";
 import logogoogle from "../resources/logogoogleg48dp.svg";
+import name from "../resources/register_nameicon.svg";
+import nickname from "../resources/register_nickicon.png";
 
 
 export default function Resister() {
@@ -19,6 +21,9 @@ const [submitstatus,setSubmitstatus] = useState("typing");
 
 const [RegisterForm, setRegisterform] = useState({
   email: "yours@Gmail.com",
+  firstname: "firstname",
+  lastName: "lastname",
+  middleName: "middlename",
   password: "",
   nickname: "",
 });
@@ -26,7 +31,17 @@ const [RegisterForm, setRegisterform] = useState({
 const onChangeForm = (label, event) => {
   switch (label) {
     case "email":
+      
       setRegisterform({ ...RegisterForm, email: event.target.value });
+      break;
+    case "firstname":
+      setRegisterform({ ...RegisterForm, firstname: event.target.value });
+      break;
+    case "lastName":
+      setRegisterform({ ...RegisterForm, lastName: event.target.value });
+      break;
+    case "middleName":
+      setRegisterform({ ...RegisterForm, middleName: event.target.value });
       break;
     case "password":
       setRegisterform({ ...RegisterForm, password: event.target.value });
@@ -40,11 +55,11 @@ const onChangeForm = (label, event) => {
 async function HandleSubmit(e){
   //e.preventDefault();
   setSubmitstatus("submitting resigter information");
-  axios.post('https://httpbin.org/anything',RegisterForm)
+  axios.post('campuslink.shiropure.com/xxx',RegisterForm)
   .then((Response)=>{
     if(Response.data.code === 200){
-      cookies.set('RegisCookie',Response.data.token)
-      alert(Response.data.token);
+      cookies.set('RegisCookie',Response.data.data.token)
+      alert(Response.data.data.token);
       setSubmitstatus("submit success");
     }
     else{
@@ -69,7 +84,6 @@ if(page === 'login'){
 
   return(
     <div className={"image23Parent"}>
-            
             <img className={"logo"} alt="" src={image32} />
             <h1 className={"loginmark"}>register</h1>
 
@@ -78,7 +92,7 @@ if(page === 'login'){
               <div className={"FieldwithImage"}>
                 <img className={'userIcon1'} alt="" src={user} />
                 <input 
-                  type='text'
+                  type='email'
                   className={"loginpageField"}
                   placeholder="1234@Gmail.com"                  
                   onChange = {(e) => onChangeForm('email',e)}
@@ -86,11 +100,41 @@ if(page === 'login'){
               </div>
 
               <div className={"FieldwithImage"}>
-                  <img className={'iconEye1'} alt="" src={icon_eye} />
+                <img className={'userIcon1'} alt="" src={name} />
+                <input 
+                  type='text'
+                  className={"loginpageField"}
+                  placeholder="firstname"                  
+                  onChange = {(e) => onChangeForm('firstname',e)}
+                />
+              </div>
+
+              <div className={"FieldwithImage"}>
+                <img className={'userIcon1'} alt="" src={name} />
+                <input 
+                  type='text'
+                  className={"loginpageField"}
+                  placeholder="middlename"                  
+                  onChange = {(e) => onChangeForm('middlename',e)}
+                />
+              </div>
+
+              <div className={"FieldwithImage"}>
+                <img className={'userIcon1'} alt="" src={name} />
+                <input 
+                  type='text'
+                  className={"loginpageField"}
+                  placeholder="lastname"                  
+                  onChange = {(e) => onChangeForm('lastname',e)}
+                />
+              </div>
+
+              <div className={"FieldwithImage"}>
+                  <img className={'iconnickname'} alt="" src={nickname} />
                   <input 
                     type = 'text'
                     className={"loginpageField"}
-                    placeholder=""
+                    placeholder="nickname"
                     onChange = {(e) => onChangeForm('nickname',e)}
                   />
               </div>
@@ -100,7 +144,7 @@ if(page === 'login'){
                   <input 
                     className={"loginpageField"}
                     type='password'
-                    placeholder=""
+                    placeholder="password"
                     
                     onChange = {(e) => onChangeForm('password',e)}
                   />
@@ -112,7 +156,7 @@ if(page === 'login'){
                   <input 
                     className={"loginpageField"}
                     type='password'
-                    placeholder=""                    
+                    placeholder="confirm Password"                    
                     onChange = {e => setConfirmPassword(e.target.value)}
                   />
               </div>

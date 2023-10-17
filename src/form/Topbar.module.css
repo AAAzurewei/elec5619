@@ -1,0 +1,128 @@
+.component1Child {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    left: 0%;
+}
+.image25Icon {
+    position: absolute;
+    height: 47.06%;
+    width: 4.03%;
+    top: 26.47%;
+    right: 86.18%;
+    bottom: 26.47%;
+    left: 9.79%;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    object-fit: cover;
+}
+.main {
+    position: absolute;
+    height: 11.43%;
+    width: 4.72%;
+    top: 43.81%;
+    left: 38.13%;
+    letter-spacing: 0.2em;
+    line-height: 12px;
+    text-transform: uppercase;
+    display: inline-block;
+    cursor: pointer;
+}
+.timetable {
+    position: absolute;
+    top: 43.81%;
+    left: 46.04%;
+    letter-spacing: 0.2em;
+    line-height: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.map {
+    position: absolute;
+    height: 10.78%;
+    width: 5.28%;
+    top: 44.12%;
+    left: 54.79%;
+    letter-spacing: 0.2em;
+    line-height: 12px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+.contacts {
+    position: absolute;
+    height: 10.78%;
+    width: 8.54%;
+    top: 44.12%;
+    left: 63.89%;
+    letter-spacing: 0.2em;
+    line-height: 12px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+.div {
+    position: absolute;
+    width: 5.83%;
+    top: 24.51%;
+    left: 85.35%;
+    font-size: 45px;
+    font-family: 'Font Awesome 5 Free';
+    color: #6c6c6c;
+    text-align: center;
+    display: inline-block;
+}
+.component1Item {
+    position: absolute;
+    height: 0.95%;
+    width: 4.31%;
+    top: 59.8%;
+    right: 41.88%;
+    bottom: 39.24%;
+    left: 53.82%;
+    background-color: #333;
+}
+.groupChild {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    left: 0%;
+    border-radius: 22px;
+    background-color: #454545;
+    border: 2px solid #2c5378;
+    box-sizing: border-box;
+    opacity: 0.1;
+}
+.search {
+    position: absolute;
+    top: 25%;
+    left: 11.11%;
+    line-height: 166.6%;
+    font-weight: 100;
+}
+.rectangleParent {
+    position: absolute;
+    height: 43.14%;
+    width: 11.25%;
+    top: 28.43%;
+    right: 14.31%;
+    bottom: 28.43%;
+    left: 74.44%;
+    font-size: 14px;
+    color: #1f1f1f;
+}
+.component1 {
+    position: relative;
+    width: 100%;
+    height: 102px;
+    text-align: left;
+    font-size: 12px;
+    color: #333;
+    font-family: Roboto;
+}
+

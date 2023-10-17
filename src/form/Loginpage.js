@@ -3,7 +3,9 @@ import { useState } from 'react';
 import Register from "./Register";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import Map from "./Map";
+import { Link } from "react-router-dom";
+import Main from "./Main";
+
 
 
 import image32 from '../resources/image23.png';
@@ -29,7 +31,7 @@ const [loginForm, setLoginform] = useState({
 
 const onChangeForm = (label, event) => {
   switch (label) {
-    case "username":
+    case "email":
       setLoginform({ ...loginForm, username: event.target.value });
       break;
     case "password":
@@ -42,10 +44,9 @@ if(page === 'register'){
 
   return <Register />
 }
-
 if(page === 'map'){
 
-  return <Map />
+  return <Main />
 }
 
 function Statemessage(){
@@ -74,11 +75,11 @@ async function HandleSubmit(e){
   //e.preventDefault();
   setSubmitstatus("submitting login information");
 
-  axios.post('https://httpbin.org/anything',loginForm)
+  axios.post('campuslink.shiropure.com/xxx',loginForm)
   .then((Response)=>{
     if(Response.data.code === 200){
-      cookies.set('userCookie',Response.data.data)
-      alert(Response.data.data);
+      cookies.set('userCookie',Response.data.data.token)
+      //alert(Response.data.data);
       setSubmitstatus("submit success");
     }
     else{
@@ -107,9 +108,9 @@ async function HandleSubmit(e){
                 <input 
                   type='text'
                   className={"loginpageField"}
-                  placeholder="username"
+                  placeholder="email"
                   
-                  onChange = {(e) => onChangeForm('username',e)}
+                  onChange = {(e) => onChangeForm('email',e)}
                 />
               </div>
 
@@ -143,6 +144,7 @@ async function HandleSubmit(e){
             </div>
 
             <div className="FieldwithImage">
+                
               
                 <button className={'loginWrapper'}
                         onClick = {() => {setPage("map")}}
