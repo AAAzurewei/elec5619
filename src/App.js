@@ -1,9 +1,11 @@
 import './App.css';
 
 import Loginpage from './form/Loginpage';
-import Main from './form/Main';
+import Map from './form/Map';
 
 function App() {
+
+    //token check
 
     
     return (

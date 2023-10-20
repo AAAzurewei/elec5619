@@ -63,6 +63,17 @@
     text-transform: uppercase;
     display: inline-block;
 }
+.logout {
+    position: absolute;
+    height: 10.78%;
+    width: 8.54%;
+    top: 44.12%;
+    left: 90.89%;
+    letter-spacing: 0.2em;
+    line-height: 12px;
+    text-transform: uppercase;
+    display: inline-block;
+}
 .div {
     position: absolute;
     width: 5.83%;
@@ -125,4 +136,3 @@
     color: #333;
     font-family: Roboto;
 }
-

@@ -248,8 +248,16 @@
   flex-direction: column;
 }
 
+.mapConponent {
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+}
+
 .fullscreen-control {
-  width: 100%; /* 占据屏幕宽度的100% */
+  
+
+  width: 90%; /* 占据屏幕宽度的100% */
   height: 100vh; /* 占据屏幕高度的100% */
 }
 

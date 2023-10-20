@@ -1,6 +1,7 @@
-import { FunctionComponent, useCallback, useState } from 'react';
+import { FunctionComponent, useCallback, useState, useEffect } from 'react';
 import styles from './Topbar.module.css';
 import logo from '../resources/campuslink_gray.png';
+
 
 export default function Topbar() {
 const onMainTextClick = useCallback(() => {
@@ -14,7 +15,6 @@ var [searchContent,setSearchContent] = useState("search");
 var [mainFunction,setmainFunction] = useState("");
 
 
-
 return (
     <div>
 <div className={styles.component1}>
@@ -24,14 +24,16 @@ return (
     <div className={styles.timetable} onClick={onTimetableTextClick}>Timetable</div>
     <div className={styles.map} onClick = {()=>setmainFunction("map")}>map</div>
     <div className={styles.contacts}>contacts</div>
-    <div className={styles.div}></div>
+    <div className={styles.logout}>logout</div>
     <div className={styles.component1Item} />
     <div className={styles.rectangleParent}>
         <div className={styles.groupChild} />
         <i className={styles.search}>Search</i>
     </div>
+    
+    
 </div>
-        
+    
     </div>
 
 );

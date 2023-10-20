@@ -4,7 +4,7 @@ import Register from "./Register";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
-import Main from "./Main";
+import Map from "./Map";
 
 
 
@@ -25,14 +25,14 @@ const [page, setPage] = useState("login");
 const [state, setState] = useState("0");
 
 const [loginForm, setLoginform] = useState({
-  username: "yours@Gmail.com",
+  email: "yours@Gmail.com",
   password: "",
 });
 
 const onChangeForm = (label, event) => {
   switch (label) {
     case "email":
-      setLoginform({ ...loginForm, username: event.target.value });
+      setLoginform({ ...loginForm, email: event.target.value });
       break;
     case "password":
       setLoginform({ ...loginForm, password: event.target.value });
@@ -46,7 +46,7 @@ if(page === 'register'){
 }
 if(page === 'map'){
 
-  return <Main />
+  return <Map />
 }
 
 function Statemessage(){
@@ -75,10 +75,10 @@ async function HandleSubmit(e){
   //e.preventDefault();
   setSubmitstatus("submitting login information");
 
-  axios.post('campuslink.shiropure.com/xxx',loginForm)
+  axios.post('http://campuslink.shiropure.com/user/login',loginForm)
   .then((Response)=>{
     if(Response.data.code === 200){
-      cookies.set('userCookie',Response.data.data.token)
+      cookies.set('userCookie',Response.data.data.token);
       //alert(Response.data.data);
       setSubmitstatus("submit success");
     }
